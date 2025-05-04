@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Higiene é Dignidade - Grupo escoteiro Salgado Filho</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="glass-nav">
+        <div class="nav-links">
+            <a href="#home" class="active">Início</a>
+          
+            <a href="#info">Informações</a>
+            <a href="#gallery">Doações</a>
+          <a href="#register">Registrar</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="page">
+
+          
+          <div class="glass-logo">
+            <img src="/GEAR_bg.png" alt="Logo GEAR Salgado Filho" class="logo">
+          </div>
+
+          
+            <br>
+            <div class="glass-card">
+                <h2 class="subtitle">🌟Campanha Solidária do Grupo escoteiro Salgado Filho🌟</h2><br>
+                <p>Essa é uma campanha dos Pioneiros do Salgado Filho para arrecadar materiais de higiene pessoal e de limpeza em apoio à <strong>Fraternidade Assistencial Lucas Evangelista</strong>, que atende crianças e adultos em situação de vulnerabilidade no Recanto das Emas.</p><br>
+              
+              <a href="https://voluntariostelefonica.v2v.net/groups/ba1c5fde-6273-42da-9dff-cab61b402180" 
+         target="_blank" 
+         rel="noopener noreferrer"><img src="/FALE.avif" alt="Logo Lucas Evangelista" class="logo"></a>
+              
+                <h2>🚀 Progresso das Doações:</h2>
+                <div class="progress-container">
+                    <!-- Será preenchido via JavaScript -->
+                </div>
+                <div class="money-progress">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="page">
+
+          <div class="glass-logo">
+            <img src="/GEAR_bg.png" alt="Logo GEAR Salgado Filho" class="logo">
+
+          </div>
+          
+            <div id="loginForm" class="glass-card">
+
+              
+                <h2>Login Administrativo</h2> <br>
+                <form id="adminLogin">
+                    <input type="text" name="username" placeholder="Login" required>
+                    <input type="password" name="password" placeholder="Senha" required>
+                    <button type="submit" class="glass-button">Entrar</button>
+                </form>
+            </div>
+            
+            <div id="donationRegistration" class="glass-card" style="display: none;">
+                <h2>Registrar Nova Doação</h2> <br>
+                <form id="donationForm">
+                    <select name="item" required>
+                        <option value="">Selecione o item</option>
+                        <!-- Opções serão preenchidas via JavaScript -->
+                    </select>
+                    <input type="number" name="quantity" placeholder="Quantidade" required>
+                    <input type="text" name="donor" placeholder="Nome do doador (opcional)">
+                    <textarea name="notes" placeholder="Observações"></textarea>
+                    <button type="submit" class="glass-button">Registrar Doação</button>
+                </form>
+
+                <div class="photo-upload-section">
+                    <h3>📸 Adicionar Fotos da Doação</h3>
+                    <form id="photoUploadForm" class="glass-card">
+                        <input type="file" id="photoInput" accept="image/*" required>
+                        <input type="text" id="photoCaption" placeholder="Legenda da foto" required>
+                        <button type="submit" class="glass-button">Enviar Foto</button>
+                    </form>
+                    <div id="uploadPreview"></div>
+                </div>
+                <div class="money-donation-section">
+                    <h3>💰 Registrar Doação em Dinheiro</h3>
+                    <form id="moneyDonationForm" class="glass-card">
+                        <input type="number" name="amount" step="0.01" min="0" placeholder="Valor em R$" required>
+                        <input type="text" name="moneyDonor" placeholder="Nome do doador (opcional)">
+                        <button type="submit" class="glass-button">Registrar Doação em Dinheiro</button>
+                    </form>
+                </div>
+
+                <button id="logoutBtn" class="glass-button">Sair</button>
+            </div>
+        </section>
+
+        <section id="info" class="page">
+
+          <div class="glass-logo">
+          <img src="/GEAR_bg.png" alt="Logo GEAR Salgado Filho" class="logo">
+          </div>
+          
+            <div class="glass-card">
+                <h2>ℹ️ Informações da Campanha:</h2>
+              <br>
+                <div class="info-content">
+                  <section class="glass-card">
+                   <h3>📍 Local e Período</h3>
+<ul>
+    <li>📌 QI 03, Lago Sul – Sede do GEAR Salgado Filho</li>
+    <li>📌 CSB 10, Taguatinga Sul – Contatar Gustavo, que está na lista de contatos</li>
+    <li>🗓️ 19 de abril a 19 de julho de 2025</li>
+</ul>
+
+                  </section>
+                    
+<section class="glass-card">
+<h3>📞 Contatos</h3>
+<ul>
+    <li>👨‍💼 Gustavo: (61) 99994-9867</li>
+    <li>👨‍💼 Renato: (61) 99938-7326</li>
+    <li>👨‍💼 Jorge: (61) 9931-7290</li>
+</ul>
+</section>
+                  <section class="glass-card">
+<h3>💲 Doações em Dinheiro:</h3>
+                  <ul>
+    <li>📱 PIX do Gustavo Antonio: 058.530.131.06</li>
+                  </section>
+                    
+                    <section >
+    <h2>🧼 Itens Aceitos:</h2>
+    <div class="items-list">
+        <div class="item-category">
+            <h4>🧴 Higiene Pessoal</h4>
+            <ul id="personalHygieneList">
+                <!-- Itens preenchidos via JavaScript -->
+            </ul>
+        </div>
+        <div class="item-category">
+            <h4>🧽 Limpeza Doméstica</h4>
+            <ul id="cleaningList">
+                <!-- Itens preenchidos via JavaScript -->
+            </ul>
+        </div>
+    </div>
+</section>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="page">
+            <div class="glass-logo">
+                <img src="/GEAR_bg.png" alt="Logo GEAR Salgado Filho" class="logo">
+            </div>
+            
+            <div class="subpage-nav">
+                <button class="subpage-button" data-target="donors">
+                    🌟 Mural de Doadores
+                </button>
+                <button class="subpage-button" data-target="photos">
+                    📸 Galeria de Entregas
+                </button>
+            </div>
+
+            <div id="donors-content" class="subpage-content">
+                <section class="glass-card donors-wall-section">
+                    <h2>🌟 Nossos Doadores 🌟</h2>
+                    <p>Agradecemos imensamente a todas as pessoas que contribuíram com nossa causa:</p>
+                    <div class="donors-grid" id="donorsWall">
+                    </div>
+                </section>
+            </div>
+
+            <div id="photos-content" class="subpage-content">
+                <section class="glass-card"> 
+                    <h2>🖼 Galeria de Entregas</h2>
+                    <br>
+                    <p>Veja as fotos das doações que foram entregues para nossa equipe.</p>
+                    <div class="gallery-grid" id="gallery">
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="thankYouModal" class="modal">
+        <div class="modal-content glass-card">
+            <h2>Agradecimento</h2>
+            <div class="total-progress"></div>
+            <div class="donors-wall">
+                <h3>Mural de Doadores</h3>
+                <div class="donors-list">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+<footer>
+  <div class="footer-top">
+    <div class="footer-section">
+      <h3>ℹ️ Sobre</h3>
+      <p>Este é um site feito para promoção da campanha de doação Lucas Evangelista.</p>
+      <br>
+      
+    
+      
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    🌟 Higiene é Dignidade - GEAR Salgado Filho <br>
+    © 2025 Campanha Lucas Evangelista.
+  </div>
+  <a href="https://github.com/gus-ant" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="color: white; text-decoration: none; font-weight: bold; background: rgba(255, 255, 255, 0.1); padding: 10px 20px; border-radius: 30px; display: inline-flex; align-items: center; gap: 10px; transition: background 0.3s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white">
+          <path d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.303 
+          3.438 9.8 8.205 11.385 0.6 0.113 
+          0.82-0.258 0.82-0.577 0-0.285-0.01-1.04-0.015-2.04-3.338 
+          0.724-4.042-1.61-4.042-1.61-0.546-1.387-1.333-1.757-1.333-1.757-1.09-0.745 
+          0.082-0.729 0.082-0.729 1.205 0.084 1.84 1.236 1.84 1.236 1.07 
+          1.835 2.807 1.304 3.495 0.997 0.108-0.776 0.418-1.305 0.76-1.605-2.665-0.3-5.467-1.335-5.467-5.93 
+          0-1.31 0.467-2.38 1.235-3.22-0.135-0.303-0.54-1.523 
+          0.105-3.176 0 0 1.005-0.322 3.3 1.23 0.96-0.267 
+          1.98-0.399 3-0.405 1.02 0.006 2.04 0.138 
+          3 0.405 2.28-1.552 3.285-1.23 
+          3.285-1.23 0.645 1.653 0.24 2.873 
+          0.12 3.176 0.765 0.84 1.23 1.91 
+          1.23 3.22 0 4.61-2.805 5.625-5.475 
+          5.92 0.435 0.375 0.81 1.102 0.81 
+          2.222 0 1.606-0.015 2.896-0.015 
+          3.286 0 0.315 0.21 0.69 0.825 
+          0.57 4.765-1.585 8.2-6.082 
+          8.2-11.385 0-6.627-5.373-12-12-12z"/>
+        </svg>
+        @gus-ant
+      </a>
+</footer>
+
+  
+</html>
