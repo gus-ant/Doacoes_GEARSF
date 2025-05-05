@@ -3,49 +3,49 @@
     "hygiene": [
       {
         "name": "🧼 Sabonete",
-        "goal": 1000,
-        "current": 90
+        "goal": 100,
+        "current": 2
       },
       {
         "name": "🪥 Pasta de dente",
-        "goal": 500,
+        "goal": 100,
         "current": 0
       },
       {
         "name": "👶 Fraldas infantis/geriátricas",
-        "goal": 500,
+        "goal": 100,
         "current": 0
       },
       {
         "name": "🧍‍♀️ Absorventes",
-        "goal": 1000,
+        "goal": 100,
         "current": 0
       },
       {
         "name": "🧻 Papel higiênico",
-        "goal": 1000,
+        "goal": 100,
         "current": 0
       }
     ],
     "cleaning": [
       {
         "name": "🧽 Detergente",
-        "goal": 300,
-        "current": 150
+        "goal": 100,
+        "current": 1
       },
       {
         "name": "🫧 Sabão em pó/barra",
-        "goal": 200,
+        "goal": 100,
         "current": 0
       },
       {
         "name": "🧴 Desinfetante",
-        "goal": 200,
+        "goal": 100,
         "current": 0
       },
       {
         "name": "💧 Água sanitária",
-        "goal": 200,
+        "goal": 100,
         "current": 0
       }
     ]
@@ -63,12 +63,17 @@
     }
   ],
   "moneyDonations": {
-    "total": 40,
+    "total": 130,
     "donations": [
       {
         "amount": 40,
         "donor": "Guilherme Blanco",
         "date": "2025-05-04T17:03:25.410Z"
+      },
+      {
+        "amount": 90,
+        "donor": "",
+        "date": "2025-05-04T22:52:33.482Z"
       }
     ]
   }

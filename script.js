@@ -1,16 +1,16 @@
 const donationItems = {
     hygiene: [
-        { name: '🧼 Sabonete', goal: 1000, current: 0 },
-        { name: '🪥 Pasta de dente', goal: 500, current: 0 },
-        { name: '👶 Fraldas infantis/geriátricas', goal: 500, current: 0 },
-        { name: '🧍‍♀️ Absorventes', goal: 1000, current: 0 },
-        { name: '🧻 Papel higiênico', goal: 1000, current: 0 }
+        { name: '🧼 Sabonete', goal: 100, current: 0 },
+        { name: '🪥 Pasta de dente', goal: 100, current: 0 },
+        { name: '👶 Fraldas infantis/geriátricas', goal: 100, current: 0 },
+        { name: '🧍‍♀️ Absorventes', goal: 100, current: 0 },
+        { name: '🧻 Papel higiênico', goal: 100, current: 0 }
     ],
     cleaning: [
-        { name: '🧽 Detergente', goal: 300, current: 0 },
-        { name: '🫧 Sabão em pó/barra', goal: 200, current: 0 },
-        { name: '🧴 Desinfetante', goal: 200, current: 0 },
-        { name: '💧 Água sanitária', goal: 200, current: 0 }
+        { name: '🧽 Detergente', goal: 100, current: 0 },
+        { name: '🫧 Sabão em pó/barra', goal: 100, current: 0 },
+        { name: '🧴 Desinfetante', goal: 100, current: 0 },
+        { name: '💧 Água sanitária', goal: 100, current: 0 }
     ]
 };
 
@@ -97,21 +97,29 @@ function updateMoneyProgress() {
 }
 
 // Login functionality
-document.getElementById('adminLogin')?.addEventListener('submit', (e) => {
+
+document.getElementById('adminLogin')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    if (username === 'g' && password === '1') {
+    const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+    });
+
+    if (res.ok) {
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('donationRegistration').style.display = 'block';
         document.getElementById('photoUploadForm').reset();
         document.getElementById('uploadPreview').innerHTML = '';
         e.target.reset();
     } else {
-        alert('Credenciais inválidas');
+        alert('Credenciais inválidas', username, password);
     }
 });
+
 
 // Logout functionality
 document.getElementById('logoutBtn')?.addEventListener('click', () => {

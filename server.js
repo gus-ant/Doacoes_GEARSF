@@ -3,6 +3,27 @@ const fs = require('fs').promises;
 const path = require('path');
 const app = express();
 
+
+//Parte para pegar infos de login
+require('dotenv').config();
+
+
+app.use(express.static('public'));
+app.use(express.json());
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  if (
+    username === process.env.ADMIN_USERNAME &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: 'Credenciais inválidas' });
+  }
+});
+
+
 app.use(express.json({limit: '50mb'}));
 app.use(express.static('.'));
 
