@@ -51,9 +51,7 @@
     ]
   },
   "donors": [
-    "gu",
-    "Guilherme Blanco",
-    "Renato"
+    
   ],
   "galleryPhotos": [
     {
@@ -69,12 +67,8 @@
         "amount": 40,
         "donor": "Guilherme Blanco",
         "date": "2025-05-04T17:03:25.410Z"
-      },
-      {
-        "amount": 90,
-        "donor": "",
-        "date": "2025-05-04T22:52:33.482Z"
       }
+      
     ]
   }
 }
