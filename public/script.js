@@ -21,6 +21,7 @@ const moneyDonations = {
     donations: []
 };
 
+
 // Navegação
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -42,7 +43,7 @@ function showPage(pageId) {
     document.querySelector(`[href="#${pageId}"]`).classList.add('active');
 }
 
-// Inicialização das listas de itens
+// Inicializa listas de itens no HTML
 function initializeLists() {
     const personalList = document.getElementById('personalHygieneList');
     const cleaningList = document.getElementById('cleaningList');
@@ -60,6 +61,7 @@ function initializeLists() {
 }
 
 // Atualização das barras de progresso
+// Atualiza as barras de progresso com os dados atuais
 function updateProgress() {
     const container = document.querySelector('.progress-container');
     container.innerHTML = '';
@@ -78,23 +80,34 @@ function updateProgress() {
     });
 }
 
+
+
 function updateMoneyProgress() {
     const moneyContainer = document.querySelector('.money-progress');
     if (!moneyContainer) return;
-    
+
     const formattedTotal = moneyDonations.total.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL'
     });
-    
+
+    // Lista individual de doações (opcional, você pode remover essa parte se quiser só o total)
+    const donationsList = moneyDonations.donations.map(d => {
+        const formattedValue = d.value.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+        return `<li>${d.name} — ${formattedValue}${d.message ? ` (${d.message})` : ''}</li>`;
+    }).join('');
+
     moneyContainer.innerHTML = `
         <div class="glass-card money-card">
             <h3>💰 Total Arrecadado em Dinheiro</h3>
             <p class="money-amount">${formattedTotal}</p>
-            
         </div>
     `;
 }
+
 
 // Login functionality
 
@@ -133,38 +146,62 @@ if (donationForm) {
     donationForm.style.display = 'none';
 }
 
-// Load data from JSON file
+
+
+// Carrega dados das planilhas do servidor
+// Carrega dados das planilhas do servidor
 async function loadData() {
     try {
-        const response = await fetch('data.json');
-        if (response.ok) {
-            const data = await response.json();
-            
-            // Update donation items with saved values
-            data.donationItems.hygiene.forEach((savedItem, index) => {
-                donationItems.hygiene[index].current = savedItem.current;
-            });
-            
-            data.donationItems.cleaning.forEach((savedItem, index) => {
-                donationItems.cleaning[index].current = savedItem.current;
-            });
-            
-            // Load other data
-            donors.push(...data.donors);
-            galleryPhotos.push(...data.galleryPhotos);
-            moneyDonations.total = data.moneyDonations.total;
-            moneyDonations.donations = data.moneyDonations.donations;
-            
-            // Update UI
-            updateProgress();
-            updateDonorsWall();
-            updateMoneyProgress();
-            updateGallery();
-        }
+        // ✅ 1. Busca os dados combinados do servidor
+        const response = await fetch('/dados-planilha');
+        const data = await response.json();
+
+        const itens = data.itens; // Dados da planilha de itens
+        const dinheiro = data.dinheiro; // Dados da planilha de dinheiro
+
+        // ✅ 2. Processa doações de itens
+        itens.forEach(entry => {
+            const name = entry.Nome || entry.nome;
+            const itemName = entry.Item || entry.item;
+            const qty = entry.Quantidade || entry.quantidade;
+
+            if (name && itemName && qty) {
+                donors.push(name);
+
+                [...donationItems.hygiene, ...donationItems.cleaning].forEach(item => {
+                    if (item.name.toLowerCase().includes(itemName.toLowerCase())) {
+                        item.current += parseInt(qty);
+                    }
+                });
+            }
+        });
+
+        // ✅ 3. Processa doações em dinheiro
+        dinheiro.forEach(entry => {
+            const name = entry.Nome || entry.nome;
+            const value = entry.Valor || entry.valor;
+            const message = entry.Mensagem || entry.mensagem;
+
+            if (name && value) {
+                donors.push(name);
+                const numericValue = parseFloat(value.replace(',', '.'));
+                moneyDonations.total += numericValue;
+                moneyDonations.donations.push({ name, value: numericValue, message });
+            }
+        });
+
+        // ✅ 4. Atualiza a interface
+        updateProgress();
+        updateDonorsWall();
+        updateMoneyProgress();
+        updateGallery();
+
     } catch (error) {
-        console.log('No existing data found or error loading data:', error);
+        console.error('❌ Erro ao carregar dados da planilha:', error);
     }
 }
+
+
 
 // Save data to MongoDB via Express
 async function saveData() {
@@ -255,13 +292,14 @@ document.getElementById('moneyDonationForm')?.addEventListener('submit', async (
 });
 
 // Mural de doadores
+// Mural de doadores (nomes únicos)
 function updateDonorsWall() {
     const donorsWall = document.getElementById('donorsWall');
     if (!donorsWall) return;
-    
+
     donorsWall.innerHTML = '';
     const uniqueDonors = [...new Set(donors)];
-    
+
     uniqueDonors.forEach(donor => {
         if (donor && donor.trim()) {
             const donorCard = document.createElement('div');
@@ -270,8 +308,7 @@ function updateDonorsWall() {
             donorsWall.appendChild(donorCard);
         }
     });
-    
-    // Se não houver doadores, mostrar mensagem
+
     if (uniqueDonors.length === 0) {
         donorsWall.innerHTML = '<div class="donor-card"><p>Seja o primeiro a doar!</p></div>';
     }
