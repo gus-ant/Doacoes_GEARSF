@@ -166,7 +166,7 @@ async function loadData() {
     }
 }
 
-// Save data to JSON file
+// Save data to MongoDB via Express
 async function saveData() {
     const data = {
         donationItems,
@@ -176,7 +176,7 @@ async function saveData() {
     };
     
     try {
-        const response = await fetch('/save-data', {
+        const response = await fetch('http://localhost:3000/save-data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -184,13 +184,17 @@ async function saveData() {
             body: JSON.stringify(data)
         });
         
-        if (!response.ok) {
-            throw new Error('Failed to save data');
+        const result = await response.json();
+        if (result.success) {
+            alert('Dados salvos com sucesso no MongoDB!');
+        } else {
+            console.error('Erro ao salvar:', result.error);
         }
     } catch (error) {
-        console.error('Error saving data:', error);
+        console.error('Erro ao enviar dados:', error);
     }
 }
+
 
 // Registro de doações
 document.getElementById('donationForm').addEventListener('submit', async (e) => {

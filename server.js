@@ -4,8 +4,26 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
+
+// CSP primeiro
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy",
+    "default-src 'self'; " +
+    "connect-src 'self'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "script-src 'self'; " +
+    "img-src 'self' data: blob:; " +
+    "font-src 'self';"
+  );
+  
+  next();
+});
+
+// Depois os outros middlewares
 app.use(express.static('public'));
 app.use(express.json({ limit: '50mb' }));
+
+
 
 // Conexão com MongoDB Atlas
 mongoose.connect(process.env.MONGODB_URI, {
