@@ -1,16 +1,31 @@
 const express = require('express');
-const fs = require('fs').promises;
+const mongoose = require('mongoose');
 const path = require('path');
-const app = express();
-
-
-//Parte para pegar infos de login
 require('dotenv').config();
 
-
+const app = express();
 app.use(express.static('public'));
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
+// Conexão com MongoDB Atlas
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('✅ Conectado ao MongoDB Atlas'))
+.catch((err) => console.error('❌ Erro ao conectar ao MongoDB:', err));
+
+// Definir o esquema de doações
+const DonationSchema = new mongoose.Schema({
+  nome: String,
+  item: String,
+  quantidade: Number,
+  data: { type: Date, default: Date.now }
+});
+
+const Donation = mongoose.model('Donation', DonationSchema);
+
+// Rota de login
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   if (
@@ -23,38 +38,19 @@ app.post('/login', (req, res) => {
   }
 });
 
-
-app.use(express.json({limit: '50mb'}));
-app.use(express.static('.'));
-
-// Endpoint to save data
+// Rota para salvar doação no banco
 app.post('/save-data', async (req, res) => {
-    try {
-        await fs.writeFile('data.json', JSON.stringify(req.body, null, 2));
-        res.json({ success: true });
-    } catch (error) {
-        console.error('Error saving data:', error);
-        res.status(500).json({ error: 'Failed to save data' });
-    }
+  try {
+    const donation = new Donation(req.body);
+    await donation.save();
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Erro ao salvar no MongoDB:', error);
+    res.status(500).json({ error: 'Erro ao salvar no banco' });
+  }
 });
 
-const os = require('os');
 const PORT = process.env.PORT || 3000;
-
-// Função para descobrir o IP local automaticamente
-function getLocalIP() {
-  const interfaces = os.networkInterfaces();
-  for (const name in interfaces) {
-    for (const iface of interfaces[name]) {
-      if (iface.family === 'IPv4' && !iface.internal) {
-        return iface.address;
-      }
-    }
-  }
-  return 'localhost';
-}
-
 app.listen(PORT, '0.0.0.0', () => {
-  const localIP = getLocalIP();
-  console.log(`✅ Server running at: http://${localIP}:${PORT}`);
+  console.log(`✅ Server online na porta ${PORT}`);
 });
